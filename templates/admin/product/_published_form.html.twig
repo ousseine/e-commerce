@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_admin_product_published', {'id': product.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+    <button type="submit" class="btn btn-sm btn-primary">{{ product.isPublished ? 'Yes' : 'No' }}</button>
+</form>

@@ -1,0 +1,16 @@
+{% extends 'base/admin.html.twig' %}
+
+{% block admin_class %}{{ parent() }} product edit{% endblock %}
+{% block title %}Edit Product{% endblock %}
+
+{% block admin %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fs-3 fw-bolder">Edit Product</h1>
+        <div class="d-flex align-items-center">
+            <a href="{{ path('app_admin_product_index') }}" class="btn btn-sm btn-dark">back to list</a>
+            {{ include('admin/product/_delete_form.html.twig') }}
+        </div>
+    </div>
+
+    {{ include('admin/product/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
+{% endblock %}

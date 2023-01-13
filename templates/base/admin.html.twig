@@ -1,0 +1,11 @@
+{% extends 'base/layout.html.twig' %}
+
+{% block body_id 'admin' %}
+
+{% block body %}
+    {% include 'include/sidebar.html.twig' %}
+
+    <div class="{% block admin_class %}contain{% endblock %}">
+        {% block admin %}{% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base/admin.html.twig' %}
+
+{% block admin_class %}{{ parent() }} product show{% endblock %}
+{% block title %}Product{% endblock %}
+
+{% block admin %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fs-3 fw-bolder">{{ product.title }}</h1>
+        <div class="d-flex align-items-center">
+            <a href="{{ path('app_admin_product_index') }}" class="btn btn-sm btn-dark">back to list</a>
+            <a href="{{ path('app_admin_product_edit', {'id': product.id}) }}" class="btn btn-sm btn-warning mx-1">edit</a>
+            {{ include('admin/product/_delete_form.html.twig') }}
+        </div>
+    </div>
+
+    <section class="w-75 mb-3">{{ product.detail }}</section>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>#</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ product.title }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ product.stock }}</td>
+            </tr>
+            <tr>
+                <th>Is_published</th>
+                <td>{{ product.isPublished ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Published_at</th>
+                <td>{{ product.publishedAt ? product.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ product.updatedAt ? product.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
