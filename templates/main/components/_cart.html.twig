@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-sm-start align-items-start mb-5">
+    <img class="me-4" src="https://dummyimage.com/200x150/dee2e6/6f7173.jpg" alt="...">
+
+    <div class="w-50">
+        <h5 class="col-sm-12 p-0 fs-5 fw-bolder mb-3">{{ element.product.title }}</h5>
+        <div class="border border-light rounded-1 bg-light p-0 me-3 mt-0 mb-3 d-flex justify-content-between align-items-center" style="width: 70px;">
+            <a href="{{ path('app_cart_remove', {id: element.product.id}) }}" class="bg-primary text-light px-1"><i class="bi bi-dash"></i></a>
+            <span class="quantity">{{ element.quantity }}</span>
+            <a href="{{ path('app_cart_add', {id: element.product.id}) }}" class="bg-info text-light px-1"><i class="bi bi-plus"></i></a>
+        </div>
+    </div>
+
+    <div class="fs-5 w-50 text-end">
+        {{ element.quantity }} x <span class="fw-bolder">{{ element.product.price }} €</span>
+    </div>
+</div>

@@ -30,8 +30,6 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($product->isIsPublished()) $product->setPublishedAt(new \DateTimeImmutable());
-
             $productRepository->save($product, true);
 
             return $this->redirectToRoute('app_admin_product_index', [], Response::HTTP_SEE_OTHER);

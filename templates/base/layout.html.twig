@@ -19,6 +19,8 @@
     {% endblock %}
 </head>
 <body class="app">
+    {% include 'include/svg.html.twig' %}
+
     <div id="{% block body_id %}app{% endblock %}">
         {% block body %}{% endblock %}
     </div>
