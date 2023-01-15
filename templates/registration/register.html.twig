@@ -1,0 +1,63 @@
+{% extends 'base/main.html.twig' %}
+
+{% block main_class %}{{ parent() }} register{% endblock %}
+{% block title 'Shop : Créer un compte' %}
+
+{% block main %}
+    <!-- Header-->
+    <header class="bg-dark py-1">
+        <div class="container px-4 px-lg-5 my-4">
+            <h1 class="text-start text-white display-6 fw-normal">Créer un compte</h1>
+        </div>
+    </header>
+
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            {{ form_start(registrationForm, {attr: {class: 'needs-validation'}}) }}
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-6">
+                        {{ form_row(registrationForm.lastname) }}
+                    </div>
+
+                    <div class="col-sm-6">
+                        {{ form_row(registrationForm.firstname) }}
+                    </div>
+
+                    <div class="col-sm-6">
+                        {{ form_row(registrationForm.phone) }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            {{ form_row(registrationForm.plainPassword.first) }}
+                            <a href="#" class="icon-eye bi bi-eye-slash"></a>
+                        </div>
+                        <small class="text-muted"><i class="bi bi-info-lg"></i> Les mots de passe doivent aux moins avoir 6 caractères</small>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            {{ form_row(registrationForm.plainPassword.second) }}
+                            <a href="#" class="icon-eye bi bi-eye-slash"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-100 btn btn-md btn-primary">Créer un compte</button>
+            {{ form_end(registrationForm) }}
+
+            <div class="mt-4 mb-3">
+                <small class="text-muted">
+                    En créant un compte, vous acceptez les conditions générales de vente de Shop.
+                    Veuillez consulter notre notice <a href="#">Protection de vos Informations Personnelles</a>,
+                    notre <a href="#">notice Cookies</a> et notre <a href="#">notice Annonces publicitaires basées sur vos centres d’intérêt</a>.
+                </small>
+            </div>
+
+            <small class="text-muted">Déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a></small>
+        </div>
+    </section>
+{% endblock %}

@@ -2,6 +2,14 @@
 
 {% block body_id 'main' %}
 
+{% block stylesheets %}
+    {{ parent() }} {{ encore_entry_link_tags('main') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }} {{ encore_entry_script_tags('main') }}
+{% endblock %}
+
 {% block body %}
     {% include 'include/navbar.html.twig' %}
 
