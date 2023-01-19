@@ -1,0 +1,33 @@
+{% extends 'base/main.html.twig' %}
+
+{% block main_class %}{{ parent() }} payment{% endblock %}
+{% block title 'Accueil : Paiement échec' %}
+
+{% block main %}
+    <!-- Header-->
+    <header class="bg-dark py-1">
+        <div class="container px-4 px-lg-5 my-4">
+            <h1 class="text-start text-white display-6 fw-normal">Paiement</h1>
+        </div>
+    </header>
+
+    <!-- Section -->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="w-75">
+                <p class="text-success fs-5">Votre paiement à échouer</p>
+                <p class="text-muted">Une erreur s'est produit lors du traitement de vos données</p>
+                <p>Verifier</p>
+                <ul>
+                    <li>Vos informations personnelles</li>
+                    <li>Votre moyen de paiement</li>
+                </ul>
+            </div>
+
+            <div class="mt-5">
+                <a href="{{ path('app_home') }}" class="btn btn-sm btn-warning">voir le panier</a>
+                <a href="{{ path('app_home') }}" class="btn btn-sm btn-secondary">Continuer vos achats</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

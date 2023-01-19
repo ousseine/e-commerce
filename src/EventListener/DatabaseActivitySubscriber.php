@@ -49,4 +49,9 @@ class DatabaseActivitySubscriber implements EventSubscriberInterface
             $entity->setSlug($this->slugger->slug($entity->getTitle()));
         }
     }
+
+    public function preRemove()
+    {
+        return;
+    }
 }

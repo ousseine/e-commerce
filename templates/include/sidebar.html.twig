@@ -57,6 +57,18 @@
                 </ul>
             </div>
         </li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#payment-quantity-collapse" aria-expanded="false">
+                Payment Request
+            </button>
+            <div class="collapse" id="payment-quantity-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="{{ path('app_admin_payment_request_index') }}" class="link-dark d-inline-flex text-decoration-none rounded">Index</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Shipped</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Returned</a></li>
+                </ul>
+            </div>
+        </li>
 
         <li class="border-top my-3"></li>
 
