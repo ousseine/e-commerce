@@ -1,0 +1,194 @@
+{% extends 'base/main.html.twig' %}
+
+{% block main_class %}{{ parent() }}edit-edit index{% endblock %}
+{% block title 'Profile' %}
+
+{% block main %}
+    <!-- Header-->
+    <header class="bg-dark py-1">
+        <div class="container px-4 px-lg-5 my-4">
+            <h1 class="text-start text-white display-6 fw-normal">Mon compte</h1>
+        </div>
+    </header>
+
+    <!-- Section-->
+    <section class="py-5 mt-5">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Modifier le profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane" type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false">Modifier votre Adresse de livraison</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders-tab-pane" type="button" role="tab" aria-controls="orders-tab-pane" aria-selected="false">Vos Commandes</button>
+            </li>
+        </ul>
+
+        <div class="tab-content p-3" id="myTabContent">
+            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <div class="my-4">
+                    <!-- Informations personnelles -->
+                    <h6 class="fs-6">Informations du profile</h6>
+                    <table class="table mb-5">
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ app.user.lastname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prénom</th>
+                            <td>{{ app.user.firstname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Téléphone</th>
+                            <td>{{ app.user.phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ app.user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mot de passe</th>
+                            <td>{{ app.user.password ? '***********' : '' }}</td>
+                        </tr>
+                    </table>
+
+                    <div class="my-5 d-flex justify-content-end">
+                        <a href="#" class="btn btn-sm btn-warning">Modifier le mot de passe</a>
+                    </div>
+
+                    <!-- Adresse de livraison-->
+                    <h6 class="fs-6 ">Adresse de livraison</h6>
+                    <table class="table mb-5">
+                        <tr>
+                            <th>N° et Nom de la rue</th>
+                            <td>{{ app.user.address.street }}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse complémentaire</th>
+                            <td>{{ app.user.address.complement }}</td>
+                        </tr>
+                        <tr>
+                            <th>Code postal</th>
+                            <td>{{ app.user.address.postal }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ville</th>
+                            <td>{{ app.user.address.city }}</td>
+                        </tr>
+                        <tr>
+                            <th>Pays</th>
+                            <td>{{ app.user.address.country }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Zone danger : supprimer votre compte -->
+                <div class="mt-5 text-end border-top py-5">
+                    <h5 class="fs-5 text-danger mb-3">Zone danger</h5>
+                    <a href="#" class="btn btn-sm btn-danger">Supprimer votre compte</a>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <div class="mt-4">
+                    {{ form_start(profileForm) }}
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">{{ form_widget(profileForm.firstname) }}</div>
+                        <div class="col-sm-6 mb-3">{{ form_widget(profileForm.lastname) }}</div>
+                        <div class="col-sm-6 mb-3">{{ form_widget(profileForm.email) }}</div>
+                        <div class="col-sm-6 mb-3">{{ form_widget(profileForm.phone) }}</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-md btn-success">Enregistrer</button>
+                    {{ form_end(profileForm) }}
+                </div>
+            </div>
+            <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab" tabindex="0">
+                <div class="mt-4">
+                    {{ form_start(addressForm) }}
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            {{ form_widget(addressForm.street, {
+                                'attr': {'placeholder': 'Adresse'}
+                            }) }}
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            {{ form_widget(addressForm.complement, {
+                                'attr': {'placeholder': 'Adresse complementaire'}
+                            }) }}
+                        </div>
+                        <div class="col-sm-3 mb-3">
+                            {{ form_widget(addressForm.postal, {
+                                'attr': {'placeholder': 'Code postal'}
+                            }) }}
+                        </div>
+                        <div class="col-sm-4 mb-3">
+                            {{ form_widget(addressForm.city, {
+                                'attr': {'placeholder': 'Ville'}
+                            }) }}
+                        </div>
+                        <div class="col-sm-5 mb-3">
+                            {{ form_widget(addressForm.country, {
+                                'attr': {'placeholder': 'Pays'}
+                            }) }}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-md btn-success">Enregistrer</button>
+                    {{ form_end(addressForm) }}
+                </div>
+            </div>
+            <div class="tab-pane fade" id="orders-tab-pane" role="tabpanel" aria-labelledby="orders-tab" tabindex="0">
+                <div class="mt-4">
+                    {% for order in app.user.orders %}
+                        <p class="text-muted">Commande réalisé le {{ order.paymentRequest.paidAt ? order.paymentRequest.paidAt | date('d/ m/ Y à H:i') : '' }}</p>
+
+                        <table class="table">
+                            <tr>
+                                <th>Reference</th>
+                                <td>{{ order.reference }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date de création</th>
+                                <td>{{ order.createdAt ? order.createdAt | date('d/ m/ Y à H:i') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Envoyer</th>
+                                <td>{{ order.isSend ? 'oui' : 'Encours de livraison' }}</td>
+                            </tr>
+                            {% if order.isSend == true %}
+                            <tr>
+                                <th>Envoyer</th>
+                                <td>{{ order.isSend ? 'oui' : 'non' }}</td>
+                            </tr>
+                            {% endif %}
+                        </table>
+
+                        <h5 class="mt-4 text-muted">Produit associé</h5>
+                        <table class="table">
+                            <thead>
+                                <th>Produit</th>
+                                <th class="text-center">Quantité</th>
+                                <th class="text-end">Prix</th>
+                            </thead>
+                            <tbody>
+                            {% for product in order.products %}
+                                <tr>
+                                    <td>{{ product.name }}</td>
+                                    <td class="text-center">{{ order.orderQuantity.quantity }}</td>
+                                    <td class="text-end">{{ product.price }} €</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="fs-6 text-muted">Aucune commandes effectuer</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

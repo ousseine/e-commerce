@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_admin_order_send', {'id': order.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('send' ~ order.id) }}">
+    <button class="btn btn-sm btn-primary">{{ order.isSend ? 'oui' : 'non' }}</button>
+</form>

@@ -1,0 +1,41 @@
+{% extends 'base/admin.html.twig' %}
+
+{% block admin_class %}{{ parent() }} order index{% endblock %}
+{% block title %}Order index{% endblock %}
+
+{% block admin %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fs-3 fw-bolder m-0">Order index</h1>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Reference</th>
+                <th>Created_at</th>
+                <th>User</th>
+                <th>Send</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.reference }}</td>
+                <td>{{ order.createdAt ? order.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ order.user }}</td>
+                <td>{% include 'admin/order/_send_form.html.twig' %}</td>
+                <td>
+                    <a href="{{ path('app_admin_order_show', {'id': order.id}) }}" class="btn btn-sm btn-info">details</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

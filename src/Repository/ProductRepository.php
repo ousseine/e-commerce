@@ -43,6 +43,18 @@ class ProductRepository extends ServiceEntityRepository
     public function findAllDesc(): array
     {
         return $this->createQueryBuilder('p')
+            ->andWhere('p.is_published = :val')
+            ->setParameter('val', true)
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /** @return Product[] : retourne les produits par ordre décroissant */
+    public function findAllAdmin(): array
+    {
+        return $this->createQueryBuilder('p')
             ->orderBy('p.id', 'DESC')
             ->getQuery()
             ->getResult()

@@ -25,6 +25,21 @@ class Order
     #[ORM\OneToOne(mappedBy: 'fromOrder', cascade: ['persist', 'remove'])]
     private ?PaymentRequest $paymentRequest = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'fromOrder')]
+    private ?OrderQuantity $orderQuantity = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $is_send = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $send_at = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -95,6 +110,66 @@ class Order
         }
 
         $this->paymentRequest = $paymentRequest;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getOrderQuantity(): ?OrderQuantity
+    {
+        return $this->orderQuantity;
+    }
+
+    public function setOrderQuantity(?OrderQuantity $orderQuantity): self
+    {
+        $this->orderQuantity = $orderQuantity;
+
+        return $this;
+    }
+
+    public function isIsSend(): ?bool
+    {
+        return $this->is_send;
+    }
+
+    public function setIsSend(?bool $is_send): self
+    {
+        $this->is_send = $is_send;
+
+        return $this;
+    }
+
+    public function getSendAt(): ?\DateTimeImmutable
+    {
+        return $this->send_at;
+    }
+
+    public function setSendAt(?\DateTimeImmutable $send_at): self
+    {
+        $this->send_at = $send_at;
 
         return $this;
     }

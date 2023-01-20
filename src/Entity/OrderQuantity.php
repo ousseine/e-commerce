@@ -21,9 +21,13 @@ class OrderQuantity
     #[ORM\OneToMany(mappedBy: 'orderQuantity', targetEntity: Product::class, orphanRemoval: true)]
     private Collection $product;
 
+    #[ORM\OneToMany(mappedBy: 'orderQuantity', targetEntity: Order::class)]
+    private Collection $fromOrder;
+
     public function __construct()
     {
         $this->product = new ArrayCollection();
+        $this->fromOrder = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,5 +75,40 @@ class OrderQuantity
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getFromOrder(): Collection
+    {
+        return $this->fromOrder;
+    }
+
+    public function addFromOrder(Order $fromOrder): self
+    {
+        if (!$this->fromOrder->contains($fromOrder)) {
+            $this->fromOrder->add($fromOrder);
+            $fromOrder->setOrderQuantity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFromOrder(Order $fromOrder): self
+    {
+        if ($this->fromOrder->removeElement($fromOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($fromOrder->getOrderQuantity() === $this) {
+                $fromOrder->setOrderQuantity(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->quantity;
     }
 }

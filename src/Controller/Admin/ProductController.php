@@ -10,7 +10,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted("ROLE_ADMIN")]
 #[Route('/admin/product')]
 class ProductController extends AbstractController
 {
@@ -18,7 +20,7 @@ class ProductController extends AbstractController
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('admin/product/index.html.twig', [
-            'products' => $productRepository->findAllDesc(),
+            'products' => $productRepository->findAllAdmin(),
         ]);
     }
 
