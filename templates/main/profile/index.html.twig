@@ -24,7 +24,7 @@
                 <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane" type="button" role="tab" aria-controls="address-tab-pane" aria-selected="false">Modifier votre Adresse de livraison</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders-tab-pane" type="button" role="tab" aria-controls="orders-tab-pane" aria-selected="false">Vos Commandes</button>
+                <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders-tab-pane" type="button" role="tab" aria-controls="orders-tab-pane" aria-selected="false">Historique de vos commandes</button>
             </li>
         </ul>
 
@@ -144,7 +144,7 @@
             <div class="tab-pane fade" id="orders-tab-pane" role="tabpanel" aria-labelledby="orders-tab" tabindex="0">
                 <div class="mt-4">
                     {% for order in app.user.orders %}
-                        <p class="text-muted">Commande réalisé le {{ order.paymentRequest.paidAt ? order.paymentRequest.paidAt | date('d/ m/ Y à H:i') : '' }}</p>
+                        <p class="text-muted">Commande réalisée le {{ order.createdAt ? order.createdAt | date('d/ m/ Y à H:i') : '' }}</p>
 
                         <table class="table">
                             <tr>
@@ -175,11 +175,11 @@
                                 <th class="text-end">Prix</th>
                             </thead>
                             <tbody>
-                            {% for product in order.products %}
+                            {% for orderQuqntity in order.orderQuantities %}
                                 <tr>
-                                    <td>{{ product.name }}</td>
-                                    <td class="text-center">{{ order.orderQuantity.quantity }}</td>
-                                    <td class="text-end">{{ product.price }} €</td>
+                                    <td>{{ orderQuqntity.product.title }}</td>
+                                    <td class="text-center">{{ orderQuqntity.quantity }}</td>
+                                    <td class="text-end">{{ orderQuqntity.product.price }} €</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

@@ -19,9 +19,6 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
-    #[ORM\OneToMany(mappedBy: 'orders', targetEntity: Product::class, orphanRemoval: true)]
-    private Collection $products;
-
     #[ORM\OneToOne(mappedBy: 'fromOrder', cascade: ['persist', 'remove'])]
     private ?PaymentRequest $paymentRequest = null;
 
@@ -31,18 +28,18 @@ class Order
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fromOrder')]
-    private ?OrderQuantity $orderQuantity = null;
-
     #[ORM\Column(nullable: true)]
     private ?bool $is_send = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $send_at = null;
 
+    #[ORM\OneToMany(mappedBy: 'fromOrder', targetEntity: OrderQuantity::class)]
+    private Collection $orderQuantities;
+
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->orderQuantities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,36 +55,6 @@ class Order
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products->add($product);
-            $product->setOrders($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getOrders() === $this) {
-                $product->setOrders(null);
-            }
-        }
 
         return $this;
     }
@@ -138,18 +105,6 @@ class Order
         return $this;
     }
 
-    public function getOrderQuantity(): ?OrderQuantity
-    {
-        return $this->orderQuantity;
-    }
-
-    public function setOrderQuantity(?OrderQuantity $orderQuantity): self
-    {
-        $this->orderQuantity = $orderQuantity;
-
-        return $this;
-    }
-
     public function isIsSend(): ?bool
     {
         return $this->is_send;
@@ -170,6 +125,36 @@ class Order
     public function setSendAt(?\DateTimeImmutable $send_at): self
     {
         $this->send_at = $send_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderQuantity>
+     */
+    public function getOrderQuantities(): Collection
+    {
+        return $this->orderQuantities;
+    }
+
+    public function addOrderQuantity(OrderQuantity $orderQuantity): self
+    {
+        if (!$this->orderQuantities->contains($orderQuantity)) {
+            $this->orderQuantities->add($orderQuantity);
+            $orderQuantity->setFromOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderQuantity(OrderQuantity $orderQuantity): self
+    {
+        if ($this->orderQuantities->removeElement($orderQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderQuantity->getFromOrder() === $this) {
+                $orderQuantity->setFromOrder(null);
+            }
+        }
 
         return $this;
     }

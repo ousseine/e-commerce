@@ -1,4 +1,20 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div class="row g-3">
+        <div class="col">{{ form_row(form.title) }}</div>
+    </div>
+
+    <div class="row g6-3">
+        <div class="col-sm-6">{{ form_row(form.price) }}</div>
+        <div class="col-sm-6">{{ form_row(form.stock) }}</div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col">{{ form_row(form.detail) }}</div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col">{{ form_row(form.is_published) }}</div>
+    </div>
+
     <button class="btn btn btn-sm btn-success">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

@@ -18,17 +18,11 @@ class OrderQuantity
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\OneToMany(mappedBy: 'orderQuantity', targetEntity: Product::class, orphanRemoval: true)]
-    private Collection $product;
+    #[ORM\ManyToOne(inversedBy: 'orderQuantities')]
+    private ?Product $product = null;
 
-    #[ORM\OneToMany(mappedBy: 'orderQuantity', targetEntity: Order::class)]
-    private Collection $fromOrder;
-
-    public function __construct()
-    {
-        $this->product = new ArrayCollection();
-        $this->fromOrder = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'orderQuantities')]
+    private ?Order $fromOrder = null;
 
     public function getId(): ?int
     {
@@ -47,68 +41,27 @@ class OrderQuantity
         return $this;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProduct(): Collection
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function addProduct(Product $product): self
+    public function setProduct(?Product $product): self
     {
-        if (!$this->product->contains($product)) {
-            $this->product->add($product);
-            $product->setOrderQuantity($this);
-        }
+        $this->product = $product;
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
-    {
-        if ($this->product->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getOrderQuantity() === $this) {
-                $product->setOrderQuantity(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Order>
-     */
-    public function getFromOrder(): Collection
+    public function getFromOrder(): ?Order
     {
         return $this->fromOrder;
     }
 
-    public function addFromOrder(Order $fromOrder): self
+    public function setFromOrder(?Order $fromOrder): self
     {
-        if (!$this->fromOrder->contains($fromOrder)) {
-            $this->fromOrder->add($fromOrder);
-            $fromOrder->setOrderQuantity($this);
-        }
+        $this->fromOrder = $fromOrder;
 
         return $this;
-    }
-
-    public function removeFromOrder(Order $fromOrder): self
-    {
-        if ($this->fromOrder->removeElement($fromOrder)) {
-            // set the owning side to null (unless already changed)
-            if ($fromOrder->getOrderQuantity() === $this) {
-                $fromOrder->setOrderQuantity(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-        return (string)$this->quantity;
     }
 }

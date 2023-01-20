@@ -64,41 +64,32 @@ class PaymentController extends AbstractController
     #[Route('/success/{stripeSessionId}', name: 'app_payment_success')]
     public function success(string $stripeSessionId): Response
     {
-        $cart = $this->cartService->get();
-
         // préparer les requêtes du paiement
-        $paymentRequest = $this->requestRepository->findOneBy([
-            'stripeSessionId' => $stripeSessionId
-        ]);
-
+        $paymentRequest = $this->requestRepository->findOneBy(['stripeSessionId' => $stripeSessionId]);
         $paymentRequest
             ->setPaidAt( new DateTimeImmutable())
             ->setValidated(true);
         $this->requestRepository->save($paymentRequest, true);
 
-
         // préparer la commande
-        $products = $cart['elements'];
-
         $order = new Order();
         $order
             ->setCreatedAt(new DateTimeImmutable())
             ->setReference('SH-'. rand(1000000, 99999999))
             ->setUser($this->getUser())
-            ->addProduct($products)
             ->setPaymentRequest($paymentRequest);
         $this->orderRepository->save($order, true);
 
         // préparer les quantités commandés
-
+        $cart = $this->cartService->get();
         foreach ($cart['elements'] as $productId => $element) {
             $product = $this->productRepository->find($productId);
 
             $orderQuantity = new OrderQuantity();
             $orderQuantity
                 ->setQuantity($element['quantity'])
-                ->addProduct($product)
-                ->addFromOrder($order);
+                ->setProduct($product)
+                ->setFromOrder($order);
             $this->quantityRepository->save($orderQuantity, true);
         }
 
@@ -106,6 +97,7 @@ class PaymentController extends AbstractController
         $this->cartService->clear();
 
         // envoyer un email de confirmation
+        // Code...
 
         return $this->render('main/payment/success.html.twig', [
             'controller_name' => 'PaymentController'

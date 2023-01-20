@@ -11,16 +11,24 @@
                 <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x600/dee2e6/6c757d.jpg" alt="..." /></div>
                 <div class="col-md-6">
                     <h1 class="display-5 fw-bolder">{{ product.title }}</h1>
-                    <div class="fs-5 mb-4">
-                        <span>{{ product.price }} €</span>
+                    <div class="fs-5 my-4">
+                        <span>{{ product.price }} €</span> &nbsp;|&nbsp;
+                        {% if product.stock > 5 %}
+                            <span class="text-muted">En stock</span>
+                        {% elseif product.stock < 5 and product.stock >= 1 %}
+                            <span class="text-muted">Il ne reste plus que {{ product.stock }} article(s)</span>
+                        {% else %}
+                            <span class="text-muted">Produit indisponible</span>
+                        {% endif %}
                     </div>
                     <p class="lead mb-4">{{ product.detail }}</p>
                     <div class="d-flex">
-                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                        {% if product.stock >= 1 %}
                         <a href="{{ path('app_cart_add', {id: product.id}) }}" class="btn btn-outline-dark flex-shrink-0" type="button">
                             <i class="bi-cart-fill me-1"></i>
                             Ajouter au panier
                         </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

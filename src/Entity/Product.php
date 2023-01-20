@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,13 +43,13 @@ class Product
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Order $orders = null;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderQuantity::class)]
+    private Collection $orderQuantities;
 
-    #[ORM\ManyToOne(inversedBy: 'product')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?OrderQuantity $orderQuantity = null;
+    public function __construct()
+    {
+        $this->orderQuantities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -162,26 +164,32 @@ class Product
         return $this;
     }
 
-    public function getOrders(): ?Order
+    /**
+     * @return Collection<int, OrderQuantity>
+     */
+    public function getOrderQuantities(): Collection
     {
-        return $this->orders;
+        return $this->orderQuantities;
     }
 
-    public function setOrders(?Order $orders): self
+    public function addOrderQuantity(OrderQuantity $orderQuantity): self
     {
-        $this->orders = $orders;
+        if (!$this->orderQuantities->contains($orderQuantity)) {
+            $this->orderQuantities->add($orderQuantity);
+            $orderQuantity->setProduct($this);
+        }
 
         return $this;
     }
 
-    public function getOrderQuantity(): ?OrderQuantity
+    public function removeOrderQuantity(OrderQuantity $orderQuantity): self
     {
-        return $this->orderQuantity;
-    }
-
-    public function setOrderQuantity(?OrderQuantity $orderQuantity): self
-    {
-        $this->orderQuantity = $orderQuantity;
+        if ($this->orderQuantities->removeElement($orderQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderQuantity->getProduct() === $this) {
+                $orderQuantity->setProduct(null);
+            }
+        }
 
         return $this;
     }
