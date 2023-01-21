@@ -38,10 +38,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
 
-    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'user')]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'user')]
     private ?Address $address = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class, cascade: ['persist'])]
     private Collection $orders;
 
     public function __construct()

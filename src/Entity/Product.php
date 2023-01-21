@@ -34,17 +34,17 @@ class Product
     #[ORM\Column]
     private ?bool $is_published = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $published_at = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
-
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderQuantity::class)]
     private Collection $orderQuantities;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $created_at = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $updated_at = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $published_at = null;
 
     public function __construct()
     {
@@ -128,42 +128,6 @@ class Product
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    public function getPublishedAt(): ?\DateTimeImmutable
-    {
-        return $this->published_at;
-    }
-
-    public function setPublishedAt(\DateTimeImmutable $published_at): self
-    {
-        $this->published_at = $published_at;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
-    {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, OrderQuantity>
      */
@@ -190,6 +154,42 @@ class Product
                 $orderQuantity->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->published_at;
+    }
+
+    public function setPublishedAt(\DateTimeInterface $published_at): self
+    {
+        $this->published_at = $published_at;
 
         return $this;
     }

@@ -30,7 +30,7 @@ class Address
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $country = null;
 
-    #[ORM\OneToMany(mappedBy: 'address', targetEntity: User::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'address', targetEntity: User::class, cascade: ['persist', 'remove'])]
     private Collection $user;
 
     public function __construct()

@@ -14,6 +14,15 @@
         </div>
     </header>
 
+    <!-- Alert success -->
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+            <div>{{ message }}</div>
+        </div>
+    {% endfor %}
+
+
     <!-- Section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
@@ -21,6 +30,10 @@
                 {% for product in products %}
                     {% include 'main/components/_product.html.twig' %}
                 {% endfor %}
+
+                <div class="navigation w-100 d-flex justify-content-center">
+                    {{ knp_pagination_render(products) }}
+                </div>
             </div>
         </div>
     </section>

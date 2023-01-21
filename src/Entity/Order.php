@@ -19,7 +19,7 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
-    #[ORM\OneToOne(mappedBy: 'fromOrder', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'fromOrder', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?PaymentRequest $paymentRequest = null;
 
     #[ORM\Column]
@@ -34,7 +34,7 @@ class Order
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $send_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'fromOrder', targetEntity: OrderQuantity::class)]
+    #[ORM\OneToMany(mappedBy: 'fromOrder', targetEntity: OrderQuantity::class, orphanRemoval: true)]
     private Collection $orderQuantities;
 
     public function __construct()

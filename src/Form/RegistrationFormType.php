@@ -39,9 +39,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'invalid_message' => 'The password fields must match.',
-                'options' => [
-                    'attr' => ['class' => 'password']
-                ],
+                'options' => ['attr' => ['class' => 'password']],
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Entrer à nouveau le mot de passe']
 

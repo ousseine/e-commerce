@@ -1,6 +1,6 @@
 {% extends 'base/main.html.twig' %}
 
-{% block main_class %}{{ parent() }}edit-edit index{% endblock %}
+{% block main_class %}{{ parent() }} profile index{% endblock %}
 {% block title 'Profile' %}
 
 {% block main %}
@@ -10,6 +10,14 @@
             <h1 class="text-start text-white display-6 fw-normal">Mon compte</h1>
         </div>
     </header>
+
+    <!-- Alert success -->
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        <div>{{ message }}</div>
+    </div>
+    {% endfor %}
 
     <!-- Section-->
     <section class="py-5 mt-5">
@@ -57,7 +65,34 @@
                     </table>
 
                     <div class="my-5 d-flex justify-content-end">
-                        <a href="#" class="btn btn-sm btn-warning">Modifier le mot de passe</a>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">Modifier le mot de passe</button>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modifier le mot de passe</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ form_start(passwordForm) }}
+                                        <div class="input-group">
+                                            {{ form_row(passwordForm.password.first) }}
+                                            <a href="#" class="icon-eye bi bi-eye-slash"></a>
+                                        </div>
+                                        <small class="text-muted"><i class="bi bi-info-lg"></i> Les mots de passe doivent aux moins avoir 6 caractères</small>
+
+                                        <div class="input-group my-3">
+                                            {{ form_row(passwordForm.password.second) }}
+                                            <a href="#" class="icon-eye bi bi-eye-slash"></a>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-md btn-success">Enregistrer</button>
+                                        {{ form_end(passwordForm) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Adresse de livraison-->
@@ -89,7 +124,7 @@
                 <!-- Zone danger : supprimer votre compte -->
                 <div class="mt-5 text-end border-top py-5">
                     <h5 class="fs-5 text-danger mb-3">Zone danger</h5>
-                    <a href="#" class="btn btn-sm btn-danger">Supprimer votre compte</a>
+                    {% include 'main/profile/_delete_form.html.twig' %}
                 </div>
             </div>
             <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,16 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ProductController extends AbstractController
 {
     #[Route('/', name: 'app_admin_product_index', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $products = $paginator->paginate(
+            $productRepository->findAllAdmin(),
+            $request->query->getInt('page', 1),
+            20
+        );
+
         return $this->render('admin/product/index.html.twig', [
-            'products' => $productRepository->findAllAdmin(),
+            'products' => $products,
         ]);
     }
 

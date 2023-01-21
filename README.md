@@ -19,6 +19,12 @@
 ## utilisation
 - télécharger ou cloner le produit
 - installer les dépendances 
-- mise à jour de la base de données
+    - composer install
+    - yarn install
+- mettre à jour et remplir la base de données
+    - symfony console d:s:u --force
+    - symfony console d:f:l
 - lancé le server
--  -> modifier le a votre guise
+    - symfony serve -d
+    - yarn dev-server
+-  → Modifier le a votre guise
