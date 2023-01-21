@@ -16,7 +16,7 @@ Un petit site e-commerce
 - acheter un produit
 - consulter votre profile : modifier votre compte, supprimer votre compte, voir l'historique de vos commandes
 
-#### admini
+#### admin
 - role client
 - gerer les produits
 - gerer les commandes / ligne de commandes
