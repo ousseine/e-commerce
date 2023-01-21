@@ -1,23 +1,39 @@
 # e-commerce
+Un petit site e-commerce
 
-## fonctionnalités
-- lister les produits
-- voir un produit
+## Fonctionnalités
+
+#### utilisateur
+- lister les produits avec pagination
+- voir la page produit
 - mettre un produit au panier
 - consulter le panier
+
+#### client
+- role utilisateur
 - créer un compte
 - se connecter 
 - acheter un produit
-- consulter votre profile : modifier, supprimer, historique de vos commandes
+- consulter votre profile : modifier votre compte, supprimer votre compte, voir l'historique de vos commandes
 
-## librairie et bundle externe
+#### interface administrateur
+- role client
+- gerer les produits
+- gerer les commandes
+- gerer les lignes de commandes
+- gerer les requetes de paiement
+- gerer les clients
+
+## Librairie et bundle externe
 - webpack encore
 - bootstrap 
 - bootstrap-icon
 - strip
+- fixtures
+- pagination
 
-## utilisation
-- télécharger ou cloner le produit
+## Utilisation
+- télécharger/cloner le projet
 - installer les dépendances 
     - composer install
     - yarn install
@@ -27,4 +43,4 @@
 - lancé le server
     - symfony serve -d
     - yarn dev-server
--  → Modifier le a votre guise
+-  → Modifier le projet a votre guise
