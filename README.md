@@ -19,8 +19,7 @@ Un petit site e-commerce
 #### interface administrateur
 - role client
 - gerer les produits
-- gerer les commandes
-- gerer les lignes de commandes
+- gerer les commandes / ligne de commandes
 - gerer les requetes de paiement
 - gerer les clients
 
