@@ -15,6 +15,8 @@ use DateTimeImmutable;
 use Stripe\Exception\ApiErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -97,7 +99,22 @@ class PaymentController extends AbstractController
         $this->cartService->clear();
 
         // envoyer un email de confirmation
-        // Code...
+        $email = (new Email())
+            ->from('contact@admin.com')
+            ->to($this->getUser()->getEmail())
+            ->subject('Confirmation de votre commande')
+            ->text('Sending emails is fun again!')
+            ->html(
+                "<dev>
+                        <p>Bonjour,<p/>
+                        <p>Nous vous remercions pour votre commande. 
+                        Nous vous tiendrons informé par e-mail lorsque les articles de votre commande auront été expédiés. 
+                        Votre date de livraison estimée est indiquée ci-dessous. 
+                        Vous pouvez suivre l’état de votre commande ou modifier celle-ci dans Vos commandes sur Amazon.fr.<p/>
+                    </dev>"
+            );
+        $mailer = Transport::fromDsn($_ENV['MAILER_DSN']);
+        $mailer->send($email);
 
         return $this->render('main/payment/success.html.twig', [
             'controller_name' => 'PaymentController'
