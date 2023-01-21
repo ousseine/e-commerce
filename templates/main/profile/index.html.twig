@@ -96,7 +96,8 @@
                     </div>
 
                     <!-- Adresse de livraison-->
-                    <h6 class="fs-6 ">Adresse de livraison</h6>
+                    <h5 class="fs-5 ">Adresse de livraison</h5>
+                    {% if app.user.address %}
                     <table class="table mb-5">
                         <tr>
                             <th>N° et Nom de la rue</th>
@@ -119,6 +120,9 @@
                             <td>{{ app.user.address.country }}</td>
                         </tr>
                     </table>
+                    {% else %}
+                        <p class="text-muted">Aucune adresse fourni</p>
+                    {% endif %}
                 </div>
 
                 <!-- Zone danger : supprimer votre compte -->
@@ -177,7 +181,7 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="orders-tab-pane" role="tabpanel" aria-labelledby="orders-tab" tabindex="0">
-                <div class="mt-4">
+                <div class="my-4">
                     {% for order in app.user.orders %}
                         <p class="text-muted">Commande réalisée le {{ order.createdAt ? order.createdAt | date('d/ m/ Y à H:i') : '' }}</p>
 
