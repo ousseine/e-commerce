@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin/order')]
@@ -41,6 +43,22 @@ class OrderController extends AbstractController
             else {
                 $order->setIsSend(false);
             }
+
+            // email de confirmation
+            $email = (new Email())
+                ->from('contact@admin.com')
+                ->to($this->getUser()->getEmail())
+                ->subject('Commande expedier')
+                ->text('Sending emails is fun again!')
+                ->html(
+                    "<dev>
+                        <p>Bonjour,<p/>
+                        <p>Nous vous remercions pour votre confiance. 
+                        Votre commande vient d'etre expedier. Il vous sera livré dans les plus brefs delai<p/>
+                    </dev>"
+                );
+            $mailer = Transport::fromDsn($_ENV['MAILER_DSN']);
+            $mailer->send($email);
 
             $orderRepository->save($order, true);
         }
